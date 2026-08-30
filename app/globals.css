@@ -2,17 +2,14 @@
 
 :root {
   --bg-color: #fffcf5;
-  --text-color: #211c15;
-  --text-muted: #61584c;
+  --text-color: #17130d;
+  --text-muted: #574c3d;
   --card-bg: #ffffff;
   --card-border: #ebdcc9;
+  --card-inner-bg: #fcf8f0;
   --primary-color: #f59308;
   --primary-hover: #d97d02;
   --primary-glow: rgba(245, 147, 8, 0.15);
-  --badge-paid-bg: #fee2e2;
-  --badge-paid-text: #991b1b;
-  --badge-free-bg: #dcfce7;
-  --badge-free-text: #166534;
 }
 
 html.dark {
@@ -21,13 +18,10 @@ html.dark {
   --text-muted: #b8ac9c;
   --card-bg: #241e16;
   --card-border: #3b3226;
+  --card-inner-bg: #1a150e;
   --primary-color: #fdb22b;
   --primary-hover: #e59e19;
   --primary-glow: rgba(253, 178, 43, 0.2);
-  --badge-paid-bg: #450a0a;
-  --badge-paid-text: #fca5a5;
-  --badge-free-bg: #052e16;
-  --badge-free-text: #86efac;
 }
 
 body {
@@ -35,7 +29,7 @@ body {
   color: var(--text-color);
   font-family: var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .brand-gradient-text {
