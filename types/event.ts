@@ -6,6 +6,7 @@ export interface TechEvent {
   date: string;
   time: string;
   isPaid: boolean;
+  price: string;
   summary: string;
   link?: string;
   ticketsConfirmed?: boolean;

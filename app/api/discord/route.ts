@@ -34,10 +34,12 @@ export async function POST(request: NextRequest) {
       const statusBadge = event.isPaid ? '💰 Evento Pago' : '🎁 Evento Gratuito';
       const color = event.isPaid ? 16534594 : 3066993; // Red vs Green color in decimal
 
+      const valorDisplay = event.price ? `${event.price} (${event.isPaid ? 'Pago' : 'Gratuito'})` : statusBadge;
+
       const fields = [
         {
-          name: '💰 Valor / Status',
-          value: statusBadge,
+          name: '🎟 Valor do Ingresso',
+          value: valorDisplay,
           inline: true,
         },
         {

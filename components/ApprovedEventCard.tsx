@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { TechEvent } from '@/types/event';
-import { Trash2, ExternalLink } from 'lucide-react';
+import { Trash2, ExternalLink, Calendar, Clock, MapPin, Ticket } from 'lucide-react';
 
 interface ApprovedEventCardProps {
   event: TechEvent;
@@ -12,7 +12,7 @@ interface ApprovedEventCardProps {
 export function ApprovedEventCard({ event, onRemove }: ApprovedEventCardProps) {
   return (
     <div className="flex flex-col justify-between rounded-xl border border-[#ebdcc9] dark:border-[#3b3226] bg-white dark:bg-[#241e16] p-4 shadow-sm relative group transition-all duration-200 hover:border-[#f59308] dark:hover:border-[#fdb22b] hover:shadow-md">
-      <div className="space-y-2">
+      <div className="space-y-2.5">
         <div className="flex items-start justify-between gap-2">
           <h4 className="font-bold text-[#17130d] dark:text-[#f7f3ec] text-base leading-snug">
             {event.title}
@@ -27,20 +27,41 @@ export function ApprovedEventCard({ event, onRemove }: ApprovedEventCardProps) {
           </button>
         </div>
 
-        <p className="text-xs text-[#574c3d] dark:text-[#b8ac9c] line-clamp-3 leading-relaxed">
+        {/* Date, Time and Location details */}
+        <div className="space-y-1 text-xs text-[#574c3d] dark:text-[#b8ac9c] bg-[#fcf8f0] dark:bg-[#1a150e] p-2.5 rounded-lg border border-[#ebdcc9] dark:border-[#3b3226]">
+          <div className="flex items-center gap-1.5 font-semibold text-[#17130d] dark:text-[#f7f3ec]">
+            <Calendar className="w-3.5 h-3.5 text-[#f59308] dark:text-[#fdb22b] shrink-0" />
+            <span>{event.date}</span>
+            {event.time && (
+              <>
+                <span className="text-[#ebdcc9] dark:text-[#3b3226]">•</span>
+                <Clock className="w-3 h-3 text-[#f59308] dark:text-[#fdb22b] shrink-0" />
+                <span>{event.time}</span>
+              </>
+            )}
+          </div>
+          <div className="flex items-center gap-1.5 text-[11px] truncate">
+            <MapPin className="w-3 h-3 text-[#f59308] dark:text-[#fdb22b] shrink-0" />
+            <span className="truncate">{event.location}</span>
+          </div>
+        </div>
+
+        <p className="text-xs text-[#574c3d] dark:text-[#b8ac9c] line-clamp-2 leading-relaxed">
           {event.summary}
         </p>
       </div>
 
-      <div className="mt-4 pt-3 border-t border-[#ebdcc9] dark:border-[#3b3226] flex items-center justify-between">
+      <div className="mt-3.5 pt-2.5 border-t border-[#ebdcc9] dark:border-[#3b3226] flex items-center justify-between gap-2 flex-wrap">
         <div>
           {event.isPaid ? (
-            <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-red-100 dark:bg-red-950/80 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-900">
-              PAGO
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-800">
+              <Ticket className="w-3 h-3" />
+              <span>{event.price || 'Pago'}</span>
             </span>
           ) : (
-            <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900">
-              GRATUITO
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-900 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+              <Ticket className="w-3 h-3" />
+              <span>{event.price || 'Gratuito'}</span>
             </span>
           )}
         </div>

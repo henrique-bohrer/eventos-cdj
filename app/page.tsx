@@ -6,6 +6,7 @@ import { TechEvent } from '@/types/event';
 import { Header } from '@/components/Header';
 import { SuggestedEventCard } from '@/components/SuggestedEventCard';
 import { ApprovedEventCard } from '@/components/ApprovedEventCard';
+import { InitialLoadingScreen } from '@/components/InitialLoadingScreen';
 import {
   FolderCheck,
   Sparkles,
@@ -16,12 +17,14 @@ import {
   Info,
   Loader2,
   Lock,
+  Ticket,
 } from 'lucide-react';
 
 export default function Home() {
   const [suggestedEvents, setSuggestedEvents] = useState<TechEvent[]>(INITIAL_EVENTS);
   const [approvedEvents, setApprovedEvents] = useState<TechEvent[]>([]);
   const [limitWarning, setLimitWarning] = useState<string | null>(null);
+  const [filterType, setFilterType] = useState<'all' | 'free' | 'paid'>('all');
 
   // Status state for Discord Webhook sending
   const [isSending, setIsSending] = useState(false);
@@ -109,8 +112,17 @@ export default function Home() {
     }
   };
 
+  const filteredSuggestedEvents = suggestedEvents.filter((ev) => {
+    if (filterType === 'free') return !ev.isPaid;
+    if (filterType === 'paid') return ev.isPaid;
+    return true;
+  });
+
   return (
     <div className="min-h-screen flex flex-col">
+      {/* 3-Second Initial Loading Splash Screen */}
+      <InitialLoadingScreen durationMs={3000} />
+
       <Header />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -188,18 +200,54 @@ export default function Home() {
                 </span>
               </div>
 
-              <button
-                onClick={handleResetList}
-                className="text-xs font-medium text-[#61584c] dark:text-[#b8ac9c] hover:text-[#f59308] dark:hover:text-[#fdb22b] flex items-center gap-1 transition-colors cursor-pointer"
-              >
-                <RefreshCw className="w-3.5 h-3.5" />
-                Restaurar Lista Inicial
-              </button>
+              <div className="flex items-center gap-3">
+                {/* Filter controls by price */}
+                <div className="inline-flex rounded-lg p-1 bg-[#f1e6d4]/50 dark:bg-[#201a13] border border-[#ebdcc9] dark:border-[#3b3226] text-xs">
+                  <button
+                    onClick={() => setFilterType('all')}
+                    className={`px-2.5 py-1 rounded-md font-semibold transition-all cursor-pointer ${
+                      filterType === 'all'
+                        ? 'bg-white dark:bg-[#32291d] text-[#17130d] dark:text-[#f7f3ec] shadow-xs'
+                        : 'text-[#70624f] dark:text-[#a89a88] hover:text-[#17130d] dark:hover:text-[#f7f3ec]'
+                    }`}
+                  >
+                    Todos ({suggestedEvents.length})
+                  </button>
+                  <button
+                    onClick={() => setFilterType('free')}
+                    className={`px-2.5 py-1 rounded-md font-semibold transition-all cursor-pointer ${
+                      filterType === 'free'
+                        ? 'bg-white dark:bg-[#32291d] text-emerald-700 dark:text-emerald-400 shadow-xs'
+                        : 'text-[#70624f] dark:text-[#a89a88] hover:text-emerald-600 dark:hover:text-emerald-400'
+                    }`}
+                  >
+                    Gratuitos ({suggestedEvents.filter((e) => !e.isPaid).length})
+                  </button>
+                  <button
+                    onClick={() => setFilterType('paid')}
+                    className={`px-2.5 py-1 rounded-md font-semibold transition-all cursor-pointer ${
+                      filterType === 'paid'
+                        ? 'bg-white dark:bg-[#32291d] text-amber-700 dark:text-amber-400 shadow-xs'
+                        : 'text-[#70624f] dark:text-[#a89a88] hover:text-amber-600 dark:hover:text-amber-400'
+                    }`}
+                  >
+                    Pagos ({suggestedEvents.filter((e) => e.isPaid).length})
+                  </button>
+                </div>
+
+                <button
+                  onClick={handleResetList}
+                  className="text-xs font-medium text-[#61584c] dark:text-[#b8ac9c] hover:text-[#f59308] dark:hover:text-[#fdb22b] flex items-center gap-1 transition-colors cursor-pointer"
+                >
+                  <RefreshCw className="w-3.5 h-3.5" />
+                  Restaurar
+                </button>
+              </div>
             </div>
 
-            {suggestedEvents.length > 0 ? (
+            {filteredSuggestedEvents.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {suggestedEvents.map((event) => (
+                {filteredSuggestedEvents.map((event) => (
                   <SuggestedEventCard
                     key={event.id}
                     event={event}
@@ -207,6 +255,19 @@ export default function Home() {
                     onReject={handleRejectEvent}
                   />
                 ))}
+              </div>
+            ) : suggestedEvents.length > 0 ? (
+              <div className="rounded-xl border border-dashed border-[#ebdcc9] dark:border-[#3b3226] p-8 text-center bg-white/50 dark:bg-[#241e16]/50">
+                <Ticket className="w-8 h-8 mx-auto text-[#61584c] dark:text-[#b8ac9c] mb-2 opacity-60" />
+                <p className="text-sm text-[#61584c] dark:text-[#b8ac9c]">
+                  Nenhum evento encontrado para o filtro selecionado (&quot;{filterType === 'free' ? 'Gratuitos' : 'Pagos'}&quot;).
+                </p>
+                <button
+                  onClick={() => setFilterType('all')}
+                  className="mt-3 px-3 py-1.5 rounded-lg bg-[#f59308] dark:bg-[#fdb22b] text-[#17130d] font-semibold text-xs hover:opacity-90 transition-opacity cursor-pointer inline-flex items-center gap-1.5"
+                >
+                  Ver todos os eventos
+                </button>
               </div>
             ) : (
               <div className="rounded-xl border border-dashed border-[#ebdcc9] dark:border-[#3b3226] p-8 text-center bg-white/50 dark:bg-[#241e16]/50">

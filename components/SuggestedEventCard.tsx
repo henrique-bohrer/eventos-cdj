@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { TechEvent } from '@/types/event';
-import { Check, X, MapPin, Calendar, Clock, ExternalLink, UserCheck, AlertCircle } from 'lucide-react';
+import { Check, X, MapPin, Calendar, Clock, ExternalLink, UserCheck, AlertCircle, Ticket } from 'lucide-react';
 
 interface SuggestedEventCardProps {
   event: TechEvent;
@@ -53,16 +53,18 @@ export function SuggestedEventCard({ event, onApprove, onReject }: SuggestedEven
       </div>
 
       {/* Bottom Section */}
-      <div className="mt-5 pt-3 border-t border-[#ebdcc9] dark:border-[#3b3226] flex items-center justify-between gap-3">
-        {/* Bottom Left Badge */}
-        <div>
+      <div className="mt-5 pt-3 border-t border-[#ebdcc9] dark:border-[#3b3226] flex items-center justify-between gap-3 flex-wrap">
+        {/* Bottom Left Price Badge */}
+        <div className="flex items-center gap-2">
           {event.isPaid ? (
-            <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold bg-red-100 dark:bg-red-950/80 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-900">
-              PAGO
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-800">
+              <Ticket className="w-3.5 h-3.5" />
+              <span>{event.price || 'Pago'}</span>
             </span>
           ) : (
-            <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900">
-              GRATUITO
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-900 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+              <Ticket className="w-3.5 h-3.5" />
+              <span>{event.price || 'Gratuito'}</span>
             </span>
           )}
         </div>
