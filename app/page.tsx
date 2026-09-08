@@ -138,11 +138,10 @@ export default function Home() {
         {/* Discord Status Message Banner */}
         {statusMessage && (
           <div
-            className={`rounded-xl border p-4 shadow-md flex items-start justify-between gap-3 ${
-              statusMessage.type === 'success'
+            className={`rounded-xl border p-4 shadow-md flex items-start justify-between gap-3 ${statusMessage.type === 'success'
                 ? 'bg-emerald-50 dark:bg-emerald-950/80 border-emerald-400 dark:border-emerald-700 text-emerald-900 dark:text-emerald-200'
                 : 'bg-rose-50 dark:bg-rose-950/80 border-rose-400 dark:border-rose-700 text-rose-900 dark:text-rose-200'
-            }`}
+              }`}
           >
             <div className="flex items-start gap-3">
               {statusMessage.type === 'success' ? (
@@ -235,11 +234,10 @@ export default function Home() {
                 </h2>
               </div>
               <span
-                className={`text-xs font-bold px-2.5 py-1 rounded-full border ${
-                  approvedEvents.length >= 4
+                className={`text-xs font-bold px-2.5 py-1 rounded-full border ${approvedEvents.length >= 4
                     ? 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300 border-rose-300 dark:border-rose-800'
                     : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800'
-                }`}
+                  }`}
               >
                 {approvedEvents.length} / 4
               </span>
@@ -260,7 +258,7 @@ export default function Home() {
               <div className="rounded-xl border border-dashed border-[#ebdcc9] dark:border-[#3b3226] p-6 text-center bg-white/30 dark:bg-[#241e16]/30">
                 <FolderCheck className="w-8 h-8 mx-auto text-[#61584c] dark:text-[#b8ac9c] mb-2 opacity-50" />
                 <p className="text-xs sm:text-sm text-[#61584c] dark:text-[#b8ac9c]">
-                  Nenhum evento aprovado ainda. Clique em "SIM" nos cards de sugestão para adicionar eventos aqui.
+                  Nenhum evento aprovado ainda. Clique em &quot;SIM&quot; nos cards de sugestão para adicionar eventos aqui.
                 </p>
               </div>
             )}
