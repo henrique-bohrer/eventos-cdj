@@ -1,6 +1,6 @@
 {
   "name": "Tech Events Curitiba",
-  "description": "Gerenciamento e envio de resumos de eventos de tecnologia na região de Curitiba",
+  "description": "Busca, curadoria e envio de eventos, palestras e hackathons de tecnologia na região de Curitiba",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

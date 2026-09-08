@@ -4,10 +4,10 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 
 export const metadata: Metadata = {
   title: 'Tech Events Curitiba',
-  description: 'Gerenciamento e envio de resumos de eventos de tecnologia na região de Curitiba',
+  description: 'Busca, curadoria e envio de eventos, palestras e hackathons de tecnologia na região de Curitiba',
   openGraph: {
     title: 'Tech Events Curitiba',
-    description: 'Gerenciamento e envio de resumos de eventos de tecnologia na região de Curitiba',
+    description: 'Busca, curadoria e envio de eventos, palestras e hackathons de tecnologia na região de Curitiba',
   },
 };
 

@@ -30,26 +30,38 @@ export async function POST(request: NextRequest) {
     }
 
     // Prepare Discord Embeds payload
+    const categoryLabels: Record<string, string> = {
+      hackathon: '🏆 Hackathon',
+      palestra: '🎤 Palestra',
+      conferencia: '🌐 Conferência',
+      meetup: '👥 Meetup',
+      workshop: '💻 Workshop',
+    };
+
     const embeds = events.map((event) => {
       const statusBadge = event.isPaid ? '💰 Evento Pago' : '🎁 Evento Gratuito';
-      const color = event.isPaid ? 16534594 : 3066993; // Red vs Green color in decimal
-
-      const valorDisplay = event.price ? `${event.price} (${event.isPaid ? 'Pago' : 'Gratuito'})` : statusBadge;
+      const color = event.category === 'hackathon'
+        ? 10181046 // Purple
+        : event.category === 'palestra'
+        ? 3447003 // Sky blue
+        : event.isPaid
+        ? 16534594 // Red
+        : 3066993; // Green
 
       const fields = [
         {
-          name: '🎟 Valor do Ingresso',
-          value: valorDisplay,
+          name: '🏷 Tipo & Modalidade',
+          value: `${event.category ? categoryLabels[event.category] || event.category : 'Evento'} • ${event.modality || 'Presencial'}`,
           inline: true,
         },
         {
-          name: '📆 Data',
-          value: event.date,
+          name: '💰 Valor / Status',
+          value: statusBadge,
           inline: true,
         },
         {
-          name: '⏱ Horário',
-          value: event.time,
+          name: '📆 Data & Horário',
+          value: `${event.date} (${event.time})`,
           inline: true,
         },
         {
@@ -58,6 +70,14 @@ export async function POST(request: NextRequest) {
           inline: false,
         },
       ];
+
+      if (event.tags && event.tags.length > 0) {
+        fields.push({
+          name: '🏷 Tags',
+          value: event.tags.map((t) => `#${t}`).join(' '),
+          inline: false,
+        });
+      }
 
       if (event.link) {
         fields.push({
