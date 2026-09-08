@@ -3,7 +3,6 @@
 import React from 'react';
 import { TechEvent } from '@/types/event';
 import { Check, X, MapPin, Calendar, Clock, ExternalLink, UserCheck, AlertCircle } from 'lucide-react';
-import { motion } from 'motion/react';
 
 interface SuggestedEventCardProps {
   event: TechEvent;
@@ -13,15 +12,7 @@ interface SuggestedEventCardProps {
 
 export function SuggestedEventCard({ event, onApprove, onReject }: SuggestedEventCardProps) {
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, scale: 0.95, y: 10 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.9, y: -8, transition: { duration: 0.18 } }}
-      whileHover={{ y: -3, transition: { duration: 0.2 } }}
-      transition={{ duration: 0.25, ease: 'easeOut' }}
-      className="flex flex-col justify-between rounded-xl border border-[#ebdcc9] dark:border-[#3b3226] bg-white dark:bg-[#241e16] p-5 shadow-sm hover:shadow-md hover:border-[#f59308]/50 dark:hover:border-[#fdb22b]/50 transition-colors"
-    >
+    <div className="flex flex-col justify-between rounded-xl border border-[#ebdcc9] dark:border-[#3b3226] bg-white dark:bg-[#241e16] p-5 shadow-sm hover:shadow-md hover:border-[#f59308]/50 dark:hover:border-[#fdb22b]/50 transition-all duration-200">
       <div className="space-y-3">
         {/* Title and Organizer */}
         <div>
@@ -79,43 +70,38 @@ export function SuggestedEventCard({ event, onApprove, onReject }: SuggestedEven
         {/* Action Buttons */}
         <div className="flex items-center gap-2">
           {event.link && (
-            <motion.a
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+            <a
               href={event.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-lg text-[#574c3d] dark:text-[#b8ac9c] hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+              className="p-2 rounded-lg text-[#574c3d] dark:text-[#b8ac9c] hover:bg-black/5 dark:hover:bg-white/5 transition-all active:scale-90"
               title="Abrir link do evento"
             >
               <ExternalLink className="w-4 h-4" />
-            </motion.a>
+            </a>
           )}
 
           {/* SIM button */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.94 }}
+          <button
             onClick={() => onApprove(event)}
-            className="flex items-center gap-1 px-3.5 py-1.5 rounded-lg text-xs font-bold text-emerald-800 dark:text-emerald-400 bg-emerald-100/80 dark:bg-emerald-950/60 hover:bg-emerald-200 dark:hover:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-800 transition-colors cursor-pointer shadow-xs"
+            className="flex items-center gap-1 px-3.5 py-1.5 rounded-lg text-xs font-bold text-emerald-800 dark:text-emerald-400 bg-emerald-100/80 dark:bg-emerald-950/60 hover:bg-emerald-200 dark:hover:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-800 transition-all duration-150 active:scale-95 cursor-pointer shadow-xs"
           >
             <Check className="w-4 h-4 stroke-[3]" />
             <span>SIM</span>
-          </motion.button>
+          </button>
 
           {/* NÃO button */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.94 }}
+          <button
             onClick={() => onReject(event)}
-            className="flex items-center gap-1 px-3.5 py-1.5 rounded-lg text-xs font-bold text-rose-800 dark:text-rose-400 bg-rose-100/80 dark:bg-rose-950/60 hover:bg-rose-200 dark:hover:bg-rose-900/80 border border-rose-300 dark:border-rose-800 transition-colors cursor-pointer shadow-xs"
+            className="flex items-center gap-1 px-3.5 py-1.5 rounded-lg text-xs font-bold text-rose-800 dark:text-rose-400 bg-rose-100/80 dark:bg-rose-950/60 hover:bg-rose-200 dark:hover:bg-rose-900/80 border border-rose-300 dark:border-rose-800 transition-all duration-150 active:scale-95 cursor-pointer shadow-xs"
           >
             <X className="w-4 h-4 stroke-[3]" />
             <span>NÃO</span>
-          </motion.button>
+          </button>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
+
 

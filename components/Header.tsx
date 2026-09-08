@@ -3,7 +3,6 @@
 import React from 'react';
 import { useTheme } from './ThemeProvider';
 import { Sun, Moon, Calendar, MapPin } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
 
 /**
  * LOGO_IMAGE_URL
@@ -36,14 +35,9 @@ export function Header({ customLogoUrl }: HeaderProps) {
             </div>
           ) : (
             /* Default Calendar Icon Badge */
-            <motion.div
-              whileHover={{ scale: 1.05, rotate: 3 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-              className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#fdb22b] to-[#f59308] flex items-center justify-center shadow-lg shadow-[#f59308]/20 cursor-default"
-            >
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#fdb22b] to-[#f59308] flex items-center justify-center shadow-lg shadow-[#f59308]/20 transition-transform duration-200 hover:scale-105 active:scale-95 cursor-default">
               <Calendar className="w-6 h-6 text-[#17130d]" />
-            </motion.div>
+            </div>
           )}
 
           <div>
@@ -57,44 +51,26 @@ export function Header({ customLogoUrl }: HeaderProps) {
           </div>
         </div>
 
-        <motion.button
+        <button
           onClick={toggleTheme}
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.96 }}
-          transition={{ duration: 0.15 }}
           aria-label="Alternar tema"
-          className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[#ebdcc9] dark:border-[#3b3226] bg-[#fffcf5] dark:bg-[#241e16] text-[#17130d] dark:text-[#f7f3ec] hover:border-[#f59308] dark:hover:border-[#fdb22b] transition-colors cursor-pointer text-sm font-semibold shadow-sm overflow-hidden"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[#ebdcc9] dark:border-[#3b3226] bg-[#fffcf5] dark:bg-[#241e16] text-[#17130d] dark:text-[#f7f3ec] hover:border-[#f59308] dark:hover:border-[#fdb22b] transition-all duration-150 active:scale-95 cursor-pointer text-sm font-semibold shadow-sm"
         >
-          <AnimatePresence mode="wait" initial={false}>
-            {theme === 'dark' ? (
-              <motion.div
-                key="sun-theme"
-                initial={{ opacity: 0, rotate: -70, scale: 0.7 }}
-                animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                exit={{ opacity: 0, rotate: 70, scale: 0.7 }}
-                transition={{ duration: 0.2 }}
-                className="flex items-center gap-2"
-              >
-                <Sun className="w-4 h-4 text-[#fdb22b]" />
-                <span className="hidden sm:inline">Modo Claro</span>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="moon-theme"
-                initial={{ opacity: 0, rotate: 70, scale: 0.7 }}
-                animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                exit={{ opacity: 0, rotate: -70, scale: 0.7 }}
-                transition={{ duration: 0.2 }}
-                className="flex items-center gap-2"
-              >
-                <Moon className="w-4 h-4 text-[#f59308]" />
-                <span className="hidden sm:inline">Modo Escuro</span>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.button>
+          {theme === 'dark' ? (
+            <div className="flex items-center gap-2">
+              <Sun className="w-4 h-4 text-[#fdb22b]" />
+              <span className="hidden sm:inline">Modo Claro</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Moon className="w-4 h-4 text-[#f59308]" />
+              <span className="hidden sm:inline">Modo Escuro</span>
+            </div>
+          )}
+        </button>
       </div>
     </header>
   );
 }
+
 
