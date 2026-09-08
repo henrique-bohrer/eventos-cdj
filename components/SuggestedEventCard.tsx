@@ -48,7 +48,7 @@ export function SuggestedEventCard({ event, onApprove, onReject }: SuggestedEven
 
         {/* Summary preview */}
         <p className="text-xs text-[#574c3d] dark:text-[#b8ac9c] line-clamp-2 italic">
-          "{event.summary}"
+          &ldquo;{event.summary}&rdquo;
         </p>
       </div>
 
