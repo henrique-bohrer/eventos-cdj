@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useSyncExternalStore } from 'react';
 
 type Theme = 'dark' | 'light';
 
@@ -14,36 +14,54 @@ const ThemeContext = createContext<ThemeContextType>({
   toggleTheme: () => {},
 });
 
+const themeListeners = new Set<() => void>();
+
+function subscribeTheme(callback: () => void) {
+  themeListeners.add(callback);
+  window.addEventListener('storage', callback);
+  return () => {
+    themeListeners.delete(callback);
+    window.removeEventListener('storage', callback);
+  };
+}
+
+function getThemeSnapshot(): Theme {
+  if (typeof window === 'undefined') return 'dark';
+  return (localStorage.getItem('cwb_events_theme') as Theme) || 'dark';
+}
+
+function getServerSnapshot(): Theme {
+  return 'dark';
+}
+
+function getMountedSnapshot(): boolean {
+  return true;
+}
+
+function getServerMountedSnapshot(): boolean {
+  return false;
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('dark');
-  const [mounted, setMounted] = useState(false);
+  const theme = useSyncExternalStore(subscribeTheme, getThemeSnapshot, getServerSnapshot);
+  const mounted = useSyncExternalStore(subscribeTheme, getMountedSnapshot, getServerMountedSnapshot);
 
   useEffect(() => {
-    setMounted(true);
-    const savedTheme = localStorage.getItem('cwb_events_theme') as Theme | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-      if (savedTheme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-    } else {
-      document.documentElement.classList.add('dark');
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(nextTheme);
-    localStorage.getItem('cwb_events_theme');
-    localStorage.setItem('cwb_events_theme', nextTheme);
-
-    if (nextTheme === 'dark') {
+    if (theme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    try {
+      localStorage.setItem('cwb_events_theme', nextTheme);
+    } catch {
+      // ignore
+    }
+    themeListeners.forEach((listener) => listener());
   };
 
   return (
@@ -57,3 +75,4 @@ export function useTheme() {
   const context = useContext(ThemeContext);
   return context;
 }
+

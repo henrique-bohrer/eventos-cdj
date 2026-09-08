@@ -260,7 +260,7 @@ export default function Home() {
               <div className="rounded-xl border border-dashed border-[#ebdcc9] dark:border-[#3b3226] p-6 text-center bg-white/30 dark:bg-[#241e16]/30">
                 <FolderCheck className="w-8 h-8 mx-auto text-[#61584c] dark:text-[#b8ac9c] mb-2 opacity-50" />
                 <p className="text-xs sm:text-sm text-[#61584c] dark:text-[#b8ac9c]">
-                  Nenhum evento aprovado ainda. Clique em "SIM" nos cards de sugestão para adicionar eventos aqui.
+                  Nenhum evento aprovado ainda. Clique em &quot;SIM&quot; nos cards de sugestão para adicionar eventos aqui.
                 </p>
               </div>
             )}
