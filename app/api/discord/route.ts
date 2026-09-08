@@ -9,7 +9,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          error: 'DISCORD_WEBHOOK_URL não configurada no arquivo de ambiente (.env.local).',
+          error:
+            'A variável DISCORD_WEBHOOK_URL não está configurada. Adicione a URL do Webhook do Discord no menu Settings (Configurações) do AI Studio ou em seu arquivo .env.local.',
         },
         { status: 500 }
       );

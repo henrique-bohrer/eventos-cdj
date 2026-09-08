@@ -4,7 +4,11 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 
 export const metadata: Metadata = {
   title: 'Tech Events Curitiba',
-  description: 'Gerenciamento de Eventos de Tecnologia na região de Curitiba',
+  description: 'Gerenciamento e envio de resumos de eventos de tecnologia na região de Curitiba',
+  openGraph: {
+    title: 'Tech Events Curitiba',
+    description: 'Gerenciamento e envio de resumos de eventos de tecnologia na região de Curitiba',
+  },
 };
 
 export default function RootLayout({

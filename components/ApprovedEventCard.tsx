@@ -3,6 +3,7 @@
 import React from 'react';
 import { TechEvent } from '@/types/event';
 import { Trash2, ExternalLink } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface ApprovedEventCardProps {
   event: TechEvent;
@@ -11,20 +12,30 @@ interface ApprovedEventCardProps {
 
 export function ApprovedEventCard({ event, onRemove }: ApprovedEventCardProps) {
   return (
-    <div className="flex flex-col justify-between rounded-xl border border-[#ebdcc9] dark:border-[#3b3226] bg-white dark:bg-[#241e16] p-4 shadow-sm relative group transition-all duration-200 hover:border-[#f59308] dark:hover:border-[#fdb22b]">
+    <motion.div
+      layout
+      initial={{ opacity: 0, x: 20, scale: 0.96 }}
+      animate={{ opacity: 1, x: 0, scale: 1 }}
+      exit={{ opacity: 0, x: -20, scale: 0.94, transition: { duration: 0.2 } }}
+      whileHover={{ y: -2, transition: { duration: 0.2 } }}
+      transition={{ duration: 0.25, ease: 'easeOut' }}
+      className="flex flex-col justify-between rounded-xl border border-[#ebdcc9] dark:border-[#3b3226] bg-white dark:bg-[#241e16] p-4 shadow-sm relative group transition-colors duration-200 hover:border-[#f59308] dark:hover:border-[#fdb22b]"
+    >
       <div className="space-y-2">
         <div className="flex items-start justify-between gap-2">
           <h4 className="font-bold text-[#17130d] dark:text-[#f7f3ec] text-base leading-snug">
             {event.title}
           </h4>
-          <button
+          <motion.button
+            whileHover={{ scale: 1.15 }}
+            whileTap={{ scale: 0.88 }}
             onClick={() => onRemove(event)}
             aria-label="Remover evento"
             title="Remover da pasta de aprovados"
             className="p-1.5 rounded-md text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition-colors cursor-pointer shrink-0"
           >
             <Trash2 className="w-4 h-4" />
-          </button>
+          </motion.button>
         </div>
 
         <p className="text-xs text-[#574c3d] dark:text-[#b8ac9c] line-clamp-3 leading-relaxed">
@@ -46,16 +57,19 @@ export function ApprovedEventCard({ event, onRemove }: ApprovedEventCardProps) {
         </div>
 
         {event.link && (
-          <a
+          <motion.a
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             href={event.link}
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs text-[#f59308] dark:text-[#fdb22b] hover:underline flex items-center gap-1 font-bold"
           >
             Link <ExternalLink className="w-3 h-3" />
-          </a>
+          </motion.a>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
+
