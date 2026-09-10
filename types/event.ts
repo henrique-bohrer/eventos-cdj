@@ -4,10 +4,12 @@ export type EventModality = 'Presencial' | 'Online' | 'Híbrido';
 export interface TechEvent {
   id: string;
   title: string;
+  name?: string;
   organizer: string;
   location: string;
   date: string;
   time: string;
+  dateTime?: string;
   isPaid: boolean;
   summary: string;
   link?: string;

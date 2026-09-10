@@ -1,6 +1,6 @@
 import { TechEvent } from '@/types/event';
 
-export const INITIAL_EVENTS: TechEvent[] = [
+const RAW_INITIAL_EVENTS: TechEvent[] = [
   // --- HACKATHONS ---
   {
     id: 'h1',
@@ -251,4 +251,12 @@ export const INITIAL_EVENTS: TechEvent[] = [
     modality: 'Presencial',
   },
 ];
+
+// Map each event to ensure 'name' and 'dateTime' fields are always populated for Prompt compatibility
+export const INITIAL_EVENTS: TechEvent[] = RAW_INITIAL_EVENTS.map((e) => ({
+  ...e,
+  name: e.title,
+  dateTime: `${e.date} • ${e.time}`,
+}));
+
 
