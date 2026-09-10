@@ -168,11 +168,16 @@ export default function Home() {
 
     try {
       const payloadEvents = approvedEvents.map((e) => ({
+        id: e.id,
         name: e.name || e.title,
+        title: e.title || e.name,
         isPaid: e.isPaid,
+        date: e.date,
+        time: e.time,
         dateTime: e.dateTime || `${e.date} • ${e.time}`,
         organizer: e.organizer,
         location: e.location,
+        summary: e.summary,
         link: e.link,
       }));
 
